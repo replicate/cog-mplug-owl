@@ -1,0 +1,49 @@
+# Configuration for Cog ⚙️
+# Reference: https://github.com/replicate/cog/blob/main/docs/yaml.md
+
+build:
+  # set to true if your model requires a GPU
+  gpu: true
+  cuda: "11.3"
+
+  # a list of ubuntu apt packages to install
+  # system_packages:
+    # - "libgl1-mesa-glx"
+    # - "libglib2.0-0"
+
+  # python version in the form '3.8' or '3.8.12'
+  python_version: "3.10.4"
+
+  # a list of packages in the format <package-name>==<version>
+  python_packages:
+    # - "numpy==1.19.4"
+    - "torch==1.13.1"
+    - "torchvision"
+    - "transformers==4.28.1"
+    - "einops==0.6.0"
+    - "icecream"
+    - "flask"
+    - "ruamel.yaml"
+    - "uvicorn"
+    - "fastapi"
+    - "markdown2"
+    - "gradio"
+    - "sconf"
+    - "tensorboardX"
+    - "tensorboard"
+    - "h5py"
+    - "sentencepiece"
+    - "peft"
+    - "tensorizer==1.1.0"
+
+
+  # commands run after the environment is setup
+  run:
+    - git clone https://github.com/X-PLUG/mPLUG-Owl.git MPLUG-OWL
+    - cd MPLUG-OWL/apex_22.01_pp && TORCH_CUDA_ARCH_LIST='5.2 6.0 6.1 7.0 7.5 8.0 8.6' pip install -v --disable-pip-version-check --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" ./
+    - "echo 'deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main' | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list"
+    - "curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -"
+    - "apt-get update && apt-get install google-cloud-cli"
+
+# predict.py defines how predictions are run on your model
+predict: "predict.py:Predictor"
