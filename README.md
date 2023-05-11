@@ -1,7 +1,7 @@
 # Cog template for mPLUG-Owl
 
 
-[![Replicate](https://replicate.com/replicate/mplug-owl/badge)](https://replicate.com/replicate/mplug-owl) 
+[![Replicate](https://replicate.com/replicate/mplug-owl/badge)](https://replicate.com/joehoover/mplug-owl)
 
 This repo demonstrates how to push an `mPLUG-Owl` model to replicate. 
 
