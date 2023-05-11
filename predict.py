@@ -26,8 +26,8 @@ from mplug_owl.tokenize_utils import tokenize_prompts
 
 # from config import DEFAULT_MODEL_NAME, DEFAULT_CONFIG_PATH, load_tokenizer, load_tensorizer
 
-TENSORIZER_WEIGHTS_PATH = "gs://replicate-weights/mplug-owl/mplug-owl.tensors"
-# TENSORIZER_WEIGHTS_PATH = "model/mplug-owl.tensors"  # path from which we pull weights when there's no COG_WEIGHTS environment variable
+# TENSORIZER_WEIGHTS_PATH = "gs://replicate-weights/mplug-owl/mplug-owl.tensors"
+TENSORIZER_WEIGHTS_PATH = "model/mplug-owl.tensors"  # path from which we pull weights when there's no COG_WEIGHTS environment variable
 # TENSORIZER_WEIGHTS_PATH = None 
 
 DEFAULT_CONFIG_PATH = "model/"
@@ -141,7 +141,7 @@ class Predictor(BasePredictor):
         max_length: int = Input(
             description="Maximum number of tokens to generate. A word is generally 2-3 tokens",
             ge=1,
-            default=500,
+            default=512,
         ),
         temperature: float = Input(
             description="Adjusts randomness of outputs, greater than 1 is random and 0 is deterministic, 0.75 is a good starting value.",
@@ -156,16 +156,16 @@ class Predictor(BasePredictor):
             default=1.0,
         ),
         top_k: int = Input(
-            description="When decoding text, samples from the top *k* most likely tokens; lower to ignore less likely tokens. Defaults to 0 (no top-k sampling).",
+            description="When decoding text, samples from the top k most likely tokens; lower to ignore less likely tokens. Defaults to 0 (no top-k sampling).",
             ge=1,
             le=500,
             default=1,
         ),
         penalty_alpha: float = Input(
-            description="When > 0 and `top_k` > 1, penalizes new tokens based on their similarity to previous tokens. Can help minimize repitition while maintaining semantic coherence. Set to 0 to disable.",
+            description="When > 0 and top_k > 1, penalizes new tokens based on their similarity to previous tokens. Can help minimize repitition while maintaining semantic coherence. Set to 0 to disable.",
             ge=0.0,
             le=1,
-            default=0,
+            default=0.0,
         ),
         repetition_penalty: float = Input(
             description="Penalty for repeated words in generated text; 1 is no penalty, values greater than 1 discourage repetition, less than 1 encourage it.",
@@ -183,10 +183,6 @@ class Predictor(BasePredictor):
             description="If set to int > 0, all ngrams of size no_repeat_ngram_size can only occur once.",
             ge=0,
             default=0,
-        ),
-        stop_sequence: str = Input(
-            description="Generation will hault if this token is produced. Currently, only single token stop sequences are support and it is recommended to use `###` as the stop sequence if you want to control generation termination.",
-            default=None,
         ),
         seed: int = Input(
             description="Set seed for reproducible outputs. Set to -1 for random seed.",
@@ -275,9 +271,6 @@ class Predictor(BasePredictor):
                 elif cur_token == self.tokenizer.eos_token:
                     break
                 
-                elif stop_sequence and cur_token == stop_sequence:
-                    break
-
                 else:
                     prev_ids.append(cur_id)
                     continue
