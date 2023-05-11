@@ -1,4 +1,4 @@
-# Cog template for mPlUG-Owl
+# Cog template for mPLUG-Owl
 
 
 [![Replicate](https://replicate.com/replicate/mplug-owl/badge)](https://replicate.com/replicate/mplug-owl) 
