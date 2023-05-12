@@ -26,7 +26,6 @@ from mplug_owl.tokenize_utils import tokenize_prompts
 
 # from config import DEFAULT_MODEL_NAME, DEFAULT_CONFIG_PATH, load_tokenizer, load_tensorizer
 
-# TENSORIZER_WEIGHTS_PATH = "gs://replicate-weights/mplug-owl/mplug-owl.tensors"
 TENSORIZER_WEIGHTS_PATH = "model/mplug-owl.tensors"  # path from which we pull weights when there's no COG_WEIGHTS environment variable
 # TENSORIZER_WEIGHTS_PATH = None 
 
