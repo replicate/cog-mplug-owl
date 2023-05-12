@@ -1458,7 +1458,6 @@ class mPLUG_OwlForConditionalGeneration(mPLUG_OwlPreTrainedModel):
         if hasattr(self, "hf_device_map"):
             # preprocess for `accelerate`
             self._preprocess_accelerate()
-        print(input_ids.shape)
         batch_size = input_ids.shape[0]
         # get text embedding
         inputs_embeds = self.get_input_embeddings()(input_ids)
@@ -1466,7 +1465,6 @@ class mPLUG_OwlForConditionalGeneration(mPLUG_OwlPreTrainedModel):
         if pixel_values is not None:
             pixel_values = pixel_values.to(input_ids.device)
             with torch.no_grad():
-                print(pixel_values.shape)
                 image_embeds = self.vision_model(
                     pixel_values, return_dict=True).last_hidden_state
                 image_attention_mask = torch.ones(
@@ -1563,7 +1561,6 @@ class mPLUG_OwlForConditionalGenerationStream(mPLUG_OwlForConditionalGeneration)
         if hasattr(self, "hf_device_map"):
             # preprocess for `accelerate`
             self._preprocess_accelerate()
-        print(input_ids.shape)
         batch_size = input_ids.shape[0]
         # get text embedding
         inputs_embeds = self.get_input_embeddings()(input_ids)
@@ -1571,7 +1568,6 @@ class mPLUG_OwlForConditionalGenerationStream(mPLUG_OwlForConditionalGeneration)
         if pixel_values is not None:
             pixel_values = pixel_values.to(input_ids.device)
             with torch.no_grad():
-                print(pixel_values.shape)
                 image_embeds = self.vision_model(
                     pixel_values, return_dict=True).last_hidden_state
                 image_attention_mask = torch.ones(
